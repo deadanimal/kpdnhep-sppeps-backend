@@ -171,30 +171,38 @@ class ApplicantController extends Controller
                         $permit = Permit::where("cipta_oleh",$got->id_pengguna)->orderBy('tarikh_cipta','DESC')->get();
                     
                         if (count($permit) > 0 && $permit[0]->tarikh_tamat <= date()){
-                            return response()->json(["status"=>"3"],200);
+                            //return response()->json(["status"=>"3"],200);
+                            return "3";
                         }else if (count($permit) > 0 && $permit[0]->tarikh_tamat > date()){
-                            return response()->json(["status"=>"2"],200);
+                            //return response()->json(["status"=>"2"],200);
+                            return "2";
                         }
                     }else{
-                        return response()->json(["status"=>"4"],200);
+                        //return response()->json(["status"=>"4"],200);
+                        return "4";
                     }
                 }else if($got->status_terkini != NULL && $got->status_terkini != "" && $got->status_terkini == "LU"){
                     //check if expired
                     $permit = Permit::where("cipta_oleh",$got->id_pengguna)->orderBy('tarikh_cipta','DESC')->get();
                     
                     if (count($permit) > 0 && $permit[0]->tarikh_tamat <= date()){
-                        return response()->json(["status"=>"3"],200);
+                       // return response()->json(["status"=>"3"],200);
+                       return "3";
                     }else if (count($permit) > 0 && $permit[0]->tarikh_tamat > date()){
-                        return response()->json(["status"=>"2"],200);
+                        //return response()->json(["status"=>"2"],200);
+                        return "2";
                     }
                    
-                    return response()->json(["status"=>"0"],200);
+                    //return response()->json(["status"=>"0"],200);
+                    return "0";
                 }else{
-                    return response()->json(["status"=>"0"],200);
+                    //return response()->json(["status"=>"0"],200);
+                    return "0";
                 }
                // $allowed_pages = $allowed_pages + "1,";
             }else{
-                return response()->json(["status"=>"1"],200);
+                //return response()->json(["status"=>"1"],200);
+                return "1";
             }
             //$got = DB::table('Permohonan')->where('jenis_permohonan',"p2")
         }else{
