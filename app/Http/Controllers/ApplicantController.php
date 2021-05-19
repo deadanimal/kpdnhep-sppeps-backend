@@ -155,14 +155,16 @@ class ApplicantController extends Controller
     }
 
     public function checkGotAppliedBefore(Request $request){
-        $result = $this->doVerification($request->user_filter);
+        $user = auth('api')->user();
+        $userid = $user['id'];
+        $result = $this->doVerification($request->user_filter,$userid);
         return response()->json(["status"=>$result],200);
     }
 
-    public function doVerification($user_filter){
+    public function doVerification($user_filter,$userid){
        // $allowed_pages = "";
         if ($user_filter == "all"){
-            $got = DB::table('Permohonan')->where('jenis_permohonan',"p1")->first();
+            $got = DB::table('Permohonan')->where('jenis_permohonan',"p1")->where('id_pengguna',$userid)->first();
             if (!empty($got)){
                 //check if failed or not
                 if ($got->status_terkini != NULL && $got->status_terkini != "" && $got->status_terkini == "GA"){
