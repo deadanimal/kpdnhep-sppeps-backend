@@ -44,7 +44,7 @@ Route::group(['middleware' => 'api','prefix' => 'api'], function(){
     Route::get('downloadPhoto', 'AuthenticateController@downloadPicture');
     Route::post('newApplication', 'ApplicantController@newApplication');
     Route::post('saveApplication', 'ApplicantController@saveApplication');
-    Route::post('doVerification','ApplicantController@doVerification');
+    Route::post('doVerification','ApplicantController@checkGotAppliedBefore');
     //Route::get();
 });
 //end of jwt
