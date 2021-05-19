@@ -155,7 +155,7 @@ class ApplicantController extends Controller
     }
 
     public function checkGotAppliedBefore(Request $request){
-        $result = doVerification($request->user_filter);
+        $result = $this->doVerification($request->user_filter);
         return response()->json(["status"=>$result],200);
     }
 
