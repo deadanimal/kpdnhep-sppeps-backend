@@ -50,7 +50,7 @@ class ApplicantController extends Controller
             $value->date = $value->tarikh_cipta;
             $nric = DB::table('users')->where('id',$value->id_pengguna)->first();
             $value->nric = $nric->no_kp;
-            if ($value->statuz_aktif == 0){
+            if ($value->status_aktif == 0){
                 $value->statuz = "Belum Hantar";
             }else{
                 if ($value->status_terkini == "NULL" || $value->status_terkini == ""){
