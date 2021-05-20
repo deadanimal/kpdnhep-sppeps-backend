@@ -46,9 +46,21 @@ class ApplicantController extends Controller
         $user = auth('api')->user();
         $data = DB::table('Permohonan')->where('id_pengguna',$user['id'])->get();
         foreach($data as $key => $value){
-            $value->type = $data[0]->jenis_permohonan == "p1" ? "Permohonan Baharu" : "";
+            $value->type = $value->jenis_permohonan == "p1" ? "Permohonan Baharu" : "";
+            $value->date = $value->tarikh_cipta;
+            $nric = DB::table('users')->where('id',$value->id_pengguna)->first();
+            $value->nric = $nric->no_kp;
+            if ($value->status_aktif == 0){
+                $value->status = "Belum Hantar";
+            }else{
+                if ($value->status_terkini == "NULL" || $value->status_terkini == ""){
+                    $value->status = "Sedang Diproses";
+                }else{
+                    $value->status = $value->status_terkini == "GA"? "Gagal" : "Lulus";
+                }
+            }
         }
-        
+
         return response()->json($data,200);
     }
 
