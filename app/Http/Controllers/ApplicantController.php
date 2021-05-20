@@ -42,7 +42,7 @@ class ApplicantController extends Controller
     
     }
 
-    private function retrieveStatus(Request $request){
+    public function retrieveStatus(Request $request){
         $user = auth('api')->user();
         $data = DB::table('permohonan')->where('id_pengguna',$user['id'])->get();
         $data->type = $data->jenis_permohonan == "p1" ? "Permohonan Baharu" : "";
