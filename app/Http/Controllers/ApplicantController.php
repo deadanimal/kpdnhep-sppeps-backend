@@ -164,7 +164,7 @@ class ApplicantController extends Controller
     public function doVerification($user_filter,$userid){
        // $allowed_pages = "";
         if ($user_filter == "all"){
-            $got = DB::table('Permohonan')->where('jenis_permohonan',"p1")->where('id_pengguna',$userid)->first();
+            $got = DB::table('Permohonan')->where('jenis_permohonan',"p1")->where('id_pengguna',$userid)->where('status_aktif',1)->first();
             if (!empty($got)){
                 //check if failed or not
                 if ($got->status_terkini != NULL && $got->status_terkini != "" && $got->status_terkini == "GA"){
