@@ -46,6 +46,7 @@ Route::group(['middleware' => 'api','prefix' => 'api'], function(){
     Route::post('saveApplication', 'ApplicantController@saveApplication');
     Route::post('doVerification','ApplicantController@checkGotAppliedBefore');
     Route::get('retrieveStatus','ApplicantController@retrieveStatus');
+    Route::get('getExtraInfo', 'ApplicantController@getExtraInfo');
     //Route::get();
 });
 //end of jwt

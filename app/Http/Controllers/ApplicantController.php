@@ -64,6 +64,15 @@ class ApplicantController extends Controller
         return response()->json($data,200);
     }
 
+    public function getExtraInfo(Request $request){
+        $permohonanLatest = DB::table('Permohonan')->where('jenis_permohonan',$request->p_type)->orderBy('tarikh_cipta','DESC')->first();
+        if(!is_null($permohonanLatest)){
+            $last = DB::table('Info Ekstra')->where('id',$permohonanLatest->id_ekstra)->first();
+            return response()->json($last,200);
+        }
+        return response()->json("",200);
+    }
+
     private function putindb(Request $request){
         $id = 0;
 
