@@ -165,7 +165,7 @@ class ApplicantController extends Controller
                 ]);
     
             }else{
-            
+                dd($request->pp_eps);
                 //insert file first
                     //return response()->json(["status"=>$request->pp_eps],200);
                     $id = DB::table('Info Ekstra')->where('id', $old->id_ekstra)
