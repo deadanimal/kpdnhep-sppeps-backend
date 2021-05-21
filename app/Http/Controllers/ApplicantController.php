@@ -38,6 +38,8 @@ class ApplicantController extends Controller
             }else{
                 $path = "";
             } 
+            $old->status_aktif = 1;
+            $old->save();
             if (isset($request->panel_bank)){
                 $id = DB::table('Info Ekstra')->where('id', $old->id_ekstra)
                 ->update([
