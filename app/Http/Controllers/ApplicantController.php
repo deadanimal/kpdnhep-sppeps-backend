@@ -128,15 +128,72 @@ class ApplicantController extends Controller
     }
 
     public function saveApplication(Request $request){
-        $id = $this->putindb($request);
-
-        $newp = new Permohonan();
-        $newp->status_aktif = 0;
         $user = auth('api')->user();
-        $newp->id_pengguna = $user['id'];
-        $newp->jenis_permohonan = "p1";
-        $newp->id_ekstra = $id;
-        $newp->save();   
+        //check if exists
+        $old = DB::table('Permohonan')->where('status_aktif',0)->where('id_pengguna',$user['id'])->first();
+        
+        if(!is_null($old)){
+
+            if ($request->file('fail_lesen')){
+                $path = Storage::putFile('lesen', $request->file('fail_lesen'));
+            }else{
+                $path = "";
+            }   
+    
+            if (isset($request->panel_bank)){
+    
+                $id = DB::table('Info Ekstra')->where('id', $old->id_ekstra)
+                ->update([
+                    "panel_bank" => $request->panel_bank,
+                    "notel" => $request->notel,
+                    "nama_panel" => $request->nama_panel,
+                    "no_kp" => $request->no_kp,
+                    "no_permit" => $request->no_permit,
+                    "notel2" => $request->notel2,
+                    "pp_eps" => $request->pp_eps ? $request->pp_eps : 9,
+                    "skop_tugas" => $request->skop_tugas,
+                    "lesen" => $request->lesen,
+                    "notelori" => $request->notelori,
+                    "emelori" => $request->emelori,
+                    "alamat1ori" => $request->alamat1ori,
+                    "alamat2ori" => $request->alamat2ori,
+                    "poskodori" => $request->poskodori,
+                    "negeriori" => $request->negeriori,
+                    "pk_sek" => $request->pek_sek,
+                    "tahap_pen" => $request->tahap_pen,
+                    "fail_lesen" => $path
+                ]);
+    
+            }else{
+                //insert file first
+                    //return response()->json(["status"=>$request->pp_eps],200);
+                    $id = DB::table('Info Ekstra')->where('id', $old->id_ekstra)
+                    ->update([
+                        "pp_eps" => !empty($request->pp_eps) ? $request->pp_eps : 9,
+                        "skop_tugas" => $request->skop_tugas,
+                        "lesen" => $request->lesen,
+                        "notelori" => $request->notelori,
+                        "emelori" => $request->emelori,
+                        "alamat1ori" => $request->alamat1ori,
+                        "alamat2ori" => $request->alamat2ori,
+                        "poskodori" => $request->poskodori,
+                        "negeriori" => $request->negeriori,
+                        "pk_sek" => $request->pek_sek,
+                        "tahap_pen" => $request->tahap_pen,
+                        "fail_lesen" => $path
+                    ]);
+    
+            }
+        }else{
+            $id = $this->putindb($request);
+            $newp = new Permohonan();
+            $newp->status_aktif = 0;
+            $user = auth('api')->user();
+            $newp->id_pengguna = $user['id'];
+            $newp->jenis_permohonan = "p1";
+            $newp->id_ekstra = $id;
+            $newp->save();   
+        }      
         
         return response()->json(["status"=>"success"],200);
     }
