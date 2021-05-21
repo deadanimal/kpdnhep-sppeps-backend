@@ -141,7 +141,7 @@ class ApplicantController extends Controller
             }   
     
             if (isset($request->panel_bank)){
-                
+                dd($request->pp_eps);
                 $id = DB::table('Info Ekstra')->where('id', $old->id_ekstra)
                 ->update([
                     "panel_bank" => $request->panel_bank,
