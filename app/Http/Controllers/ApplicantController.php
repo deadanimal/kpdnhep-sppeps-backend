@@ -150,7 +150,7 @@ class ApplicantController extends Controller
                     "no_kp" => $request->no_kp,
                     "no_permit" => $request->no_permit,
                     "notel2" => $request->notel2,
-                    "pp_eps" => $request->pp_eps == 0 || $request->pp_eps == 1 ? $request->pp_pp_eps : 9,
+                    "pp_eps" => $request->pp_eps == 0 || $request->pp_eps == 1 ? $request->pp_eps : 9,
                     "skop_tugas" => $request->skop_tugas,
                     "lesen" => $request->lesen,
                     "notelori" => $request->notelori,
