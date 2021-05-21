@@ -31,8 +31,13 @@ class ApplicantController extends Controller
         $user = auth('api')->user();
 
         $old = DB::table('Permohonan')->where('status_aktif',0)->where('id_pengguna',$user['id'])->first();
-        
+   
         if(!is_null($old)){
+            if ($request->file('fail_lesen')){
+                $path = Storage::putFile('lesen', $request->file('fail_lesen'));
+            }else{
+                $path = "";
+            } 
             if (isset($request->panel_bank)){
                 $id = DB::table('Info Ekstra')->where('id', $old->id_ekstra)
                 ->update([
