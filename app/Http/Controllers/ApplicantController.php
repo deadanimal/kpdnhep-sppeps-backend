@@ -141,7 +141,6 @@ class ApplicantController extends Controller
             }   
     
             if (isset($request->panel_bank)){
-                dd($request->pp_eps);
                 $id = DB::table('Info Ekstra')->where('id', $old->id_ekstra)
                 ->update([
                     "panel_bank" => $request->panel_bank,
@@ -165,12 +164,12 @@ class ApplicantController extends Controller
                 ]);
     
             }else{
-                dd($request->pp_eps);
+                
                 //insert file first
                     //return response()->json(["status"=>$request->pp_eps],200);
                     $id = DB::table('Info Ekstra')->where('id', $old->id_ekstra)
                     ->update([
-                        "pp_eps" => !empty($request->pp_eps) ? $request->pp_eps : 9,
+                        "pp_eps" => $request->pp_eps == 0 || $request->pp_eps == 1 ? $request->pp_eps : 9,
                         "skop_tugas" => $request->skop_tugas,
                         "lesen" => $request->lesen,
                         "notelori" => $request->notelori,
