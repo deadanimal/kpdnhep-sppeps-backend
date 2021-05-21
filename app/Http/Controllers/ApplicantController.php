@@ -139,7 +139,7 @@ class ApplicantController extends Controller
             }else{
                 $path = "";
             }   
-    dd(empty($request->pp_eps));
+    
             if (isset($request->panel_bank)){
                 
                 $id = DB::table('Info Ekstra')->where('id', $old->id_ekstra)
