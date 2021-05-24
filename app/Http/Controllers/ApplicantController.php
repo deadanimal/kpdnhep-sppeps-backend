@@ -311,6 +311,9 @@ class ApplicantController extends Controller
     public function doVerification($user_filter,$userid){
        // $allowed_pages = "";
         if ($user_filter == "all"){
+            //start simulation
+            return "1,2,3,4,5,6";
+            //end simulation
             $got = DB::table('Permohonan')->where('jenis_permohonan',"p1")->where('id_pengguna',$userid)->where('status_aktif',1)->first();
             if (!empty($got)){
                 //check if failed or not
