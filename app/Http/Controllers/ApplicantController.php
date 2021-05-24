@@ -36,7 +36,7 @@ class ApplicantController extends Controller
             if ($request->file('fail_lesen')){
                 $path = Storage::putFile('lesen', $request->file('fail_lesen'));
             }else{
-                $path = "";
+                $path = $old->fail_lesen;
             } 
             $old2 = Permohonan::find($old->id);
             $old2->status_aktif = 1;
@@ -123,7 +123,8 @@ class ApplicantController extends Controller
     }
 
     public function getExtraInfo(Request $request){
-        $permohonanLatest = DB::table('Permohonan')->where('jenis_permohonan',$request->p_type)->orderBy('tarikh_cipta','DESC')->first();
+        $user = auth('api')->user();
+        $permohonanLatest = DB::table('Permohonan')->where('jenis_permohonan',$request->p_type)->where('id_pengguna',$user['id'])->orderBy('tarikh_cipta','DESC')->first();
         if(!is_null($permohonanLatest)){
             $last = DB::table('Info Ekstra')->where('id',$permohonanLatest->id_ekstra)->first();
             return response()->json($last,200);
@@ -195,7 +196,7 @@ class ApplicantController extends Controller
             if ($request->file('fail_lesen')){
                 $path = Storage::putFile('lesen', $request->file('fail_lesen'));
             }else{
-                $path = "";
+                $path = $old->fail_lesen;
             }   
     
             if (isset($request->panel_bank)){
