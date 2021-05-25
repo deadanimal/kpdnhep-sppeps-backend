@@ -338,17 +338,18 @@ class ApplicantController extends Controller
 
              //check if exists
             $old = DB::table('Permohonan')->where('status_aktif',0)->where('id_pengguna',$user['id'])->where('jenis_permohonan','p2')->first(); 
+            $ei=DB::table('Info Ekstra')->where('id', $old->id_ekstra)->first();
 
             if ($request->file('fail_lesen')){
                 $path = Storage::putFile('lesen', $request->file('fail_lesen'));
             }else{
-                $path = $old->fail_lesen;
+                $path = $ei->fail_lesen;
             }   
 
             if ($request->file('surat_sokong')){
                 $path2 = Storage::putFile('surat_sokong', $request->file('surat_sokong'));
             }else{
-                $path2 = "";
+                $path2 = $ei->surat_skg;
             }
 
         if(!is_null($old)){
