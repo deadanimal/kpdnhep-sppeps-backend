@@ -355,7 +355,7 @@ class ApplicantController extends Controller
             }else{
                 if(!is_null($old)){
                     $ei = DB::table('Info Ekstra')->where('id', $old->id_ekstra)->first();
-                    $path = $ei->surat_skg;
+                    $path2 = $ei->surat_skg;
                 }else{
                     $path2 = "";
                 }       
