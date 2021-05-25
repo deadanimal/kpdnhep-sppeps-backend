@@ -30,7 +30,7 @@ class ApplicantController extends Controller
     public function newApplication(Request $request){
         $user = auth('api')->user();
 
-        $old = DB::table('Permohonan')->where('status_aktif',0)->where('id_pengguna',$user['id'])->first();
+        $old = DB::table('Permohonan')->where('status_aktif',0)->where('id_pengguna',$user['id'])->where('jenis_permohonan','p1')->first();
    
         if(!is_null($old)){
             if ($request->file('fail_lesen')){
@@ -100,6 +100,79 @@ class ApplicantController extends Controller
     
     }
 
+    public function save_renew(Request $request){
+        $user = auth('api')->user();
+
+        $old = DB::table('Permohonan')->where('status_aktif',0)->where('id_pengguna',$user['id'])->where('jenis_permohonan','p2')->first();
+   
+        if(!is_null($old)){
+            if ($request->file('fail_lesen')){
+                $path = Storage::putFile('lesen', $request->file('fail_lesen'));
+            }else{
+                $path = $old->fail_lesen;
+            } 
+            $old2 = Permohonan::find($old->id);
+            $old2->status_aktif = 1;
+            $old2->save();
+            if (isset($request->panel_bank)){
+                $id = DB::table('Info Ekstra')->where('id', $old->id_ekstra)
+                ->update([
+                    "panel_bank" => $request->panel_bank,
+                    "notel" => $request->notel,
+                    "nama_panel" => $request->nama_panel,
+                    "no_kp" => $request->no_kp,
+                    "no_permit" => $request->no_permit,
+                    "notel2" => $request->notel2,
+                    "pp_eps" => $request->pp_eps == 0 || $request->pp_eps == 1 ? $request->pp_eps : 9,
+                    "skop_tugas" => $request->skop_tugas,
+                    "lesen" => $request->lesen,
+                    "notelori" => $request->notelori,
+                    "emelori" => $request->emelori,
+                    "alamat1ori" => $request->alamat1ori,
+                    "alamat2ori" => $request->alamat2ori,
+                    "poskodori" => $request->poskodori,
+                    "negeriori" => $request->negeriori,
+                    "pk_sek" => $request->pek_sek,
+                    "tahap_pen" => $request->tahap_pen,
+                    "fail_lesen" => $path
+                ]);
+    
+            }else{
+                
+                //insert file first
+                    //return response()->json(["status"=>$request->pp_eps],200);
+                    $id = DB::table('Info Ekstra')->where('id', $old->id_ekstra)
+                    ->update([
+                        "pp_eps" => $request->pp_eps == 0 || $request->pp_eps == 1 ? $request->pp_eps : 9,
+                        "skop_tugas" => $request->skop_tugas,
+                        "lesen" => $request->lesen,
+                        "notelori" => $request->notelori,
+                        "emelori" => $request->emelori,
+                        "alamat1ori" => $request->alamat1ori,
+                        "alamat2ori" => $request->alamat2ori,
+                        "poskodori" => $request->poskodori,
+                        "negeriori" => $request->negeriori,
+                        "pk_sek" => $request->pek_sek,
+                        "tahap_pen" => $request->tahap_pen,
+                        "fail_lesen" => $path
+                    ]);
+    
+            }
+        }else{
+            $id = $this->putindb($request);
+
+            $newp = new Permohonan();
+            $newp->status_aktif = 1;
+            $user = auth('api')->user();
+            $newp->id_pengguna = $user['id'];
+            $newp->jenis_permohonan = "p2";
+            $newp->id_ekstra = $id;
+            $newp->save();   
+        }
+        return response()->json(["status"=>"success"],200);
+    
+    }
+
     public function retrieveStatus(Request $request){
         $user = auth('api')->user();
         $data = DB::table('Permohonan')->where('id_pengguna',$user['id'])->get();
@@ -139,8 +212,10 @@ class ApplicantController extends Controller
             $path = Storage::putFile('lesen', $request->file('fail_lesen'));
         }else{
             $path = "";
-        }   
+        }
 
+    
+        
         if (isset($request->panel_bank)){
 
             $id = DB::table('Info Ekstra')->insertGetId([
@@ -179,7 +254,8 @@ class ApplicantController extends Controller
                     "negeriori" => $request->negeriori,
                     "pk_sek" => $request->pek_sek,
                     "tahap_pen" => $request->tahap_pen,
-                    "fail_lesen" => $path
+                    "fail_lesen" => $path,
+
                 ]);
 
         }
@@ -189,7 +265,7 @@ class ApplicantController extends Controller
     public function saveApplication(Request $request){
         $user = auth('api')->user();
         //check if exists
-        $old = DB::table('Permohonan')->where('status_aktif',0)->where('id_pengguna',$user['id'])->first();
+        $old = DB::table('Permohonan')->where('status_aktif',0)->where('id_pengguna',$user['id'])->where('jenis_permohonan','p1')->first();
         
         if(!is_null($old)){
 
@@ -257,48 +333,153 @@ class ApplicantController extends Controller
         return response()->json(["status"=>"success"],200);
     }
 
-    public function checkMyKad(Request $request){
+    public function saveApplicationR(Request $request){
+        $user = auth('api')->user();
 
-        // $response = Http::asForm()->post($mykadvalidationlink[0]->value,[
-        //     'mykad' => $mykadNum,
-        //     'requestType' => 'kutipan',
-        //     'btnsimpan' => 'simpan'
-        // ]);
+             //check if exists
+            $old = DB::table('Permohonan')->where('status_aktif',0)->where('id_pengguna',$user['id'])->where('jenis_permohonan','p2')->first(); 
 
-        $mykadno = $request->myKadId;
-        //if ($mykadno == "999999999999" || $mykadno == "019999999999"){
-            //check if ic already exists
-            $record = User::where("no_kp",$mykadno)->get();
-            
-            if (empty($record[0])){
-                return response()->json(["status"=>"success"],200);
+            if ($request->file('fail_lesen')){
+                $path = Storage::putFile('lesen', $request->file('fail_lesen'));
             }else{
-                //means havent complete registration
-                if ($record[0]->code_daftar == -1){
-                    return response()->json(["status"=>"backtologin"],200);
-                }else{
-                    return response()->json(["status"=>"sendtothirdpage","no_kp"=> $record[0]->no_kp,"code_daftar"=> $record[0]->code_daftar],200);
-                }
-            }
-        // }          
-        // else
-        //     return response()->json("failed",400);           
-    }
+                $path = $old->fail_lesen;
+            }   
 
-    public function savePre(Request $request)
-    {    
-	    //check if exists before
-	   // $user = User::where("no_kp","=",$request->no_kp)->get();
-	   // dd($user);
-	    $user = new User;
-        $user->emel = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->no_kp = $request->no_kp;
-        $user->code_daftar = rand(10000000,99999999);
-        $user->status_aktif = 0;
-        $user->level_akses = 0;
-	    $user->save();
-	    return response()->json(["status"=>"success","code"=> $user->code_daftar],200);
+            if ($request->file('surat_sokong')){
+                $path2 = Storage::putFile('surat_sokong', $request->file('surat_sokong'));
+            }else{
+                $path2 = "";
+            }
+
+        if(!is_null($old)){
+
+            if ($request->mode == "hantar"){
+                DB::table('Permohonan')->where('id', $old->id)
+                ->update([
+                    "status_aktif" => 1
+                ]);
+            }
+            //focus here
+            if (isset($request->panel_bank)){
+                $id = DB::table('Info Ekstra')->where('id', $old->id_ekstra)
+                ->update([
+                    "panel_bank" => $request->panel_bank,
+                    "notel" => $request->notel,
+                    "nama_panel" => $request->nama_panel,
+                    "no_kp" => $request->no_kp,
+                    "no_permit" => $request->no_permit,
+                    "notel2" => $request->notel2,
+                    "lesen" => $request->lesen,
+                    "notelori" => $request->notelori,
+                    "emelori" => $request->emelori,
+                    "alamat1ori" => $request->alamat1ori,
+                    "alamat2ori" => $request->alamat2ori,
+                    "poskodori" => $request->poskodori,
+                    "negeriori" => $request->negeriori,
+                    "tahap_pen" => $request->tahap_pen,
+                    "fail_lesen" => $path,
+                    "surat_skg" => $path2,
+                    "sp_eps" => $request->sp_eps,
+                    "dari_tahun" => isset($request->dari_tahun) ? $request->dari_tahun : NULL,
+                    "p_sampingan" => isset($request->p_sampingan) ? $request->p_sampingan : NULL,
+                    "tahun_h" => $request->tahun_h
+
+                ]);
+    
+            }else{
+                
+                //insert file first
+                    //return response()->json(["status"=>$request->pp_eps],200);
+                    $id = DB::table('Info Ekstra')->where('id', $old->id_ekstra)
+                    ->update([
+                        "pp_eps" => $request->pp_eps == 0 || $request->pp_eps == 1 ? $request->pp_eps : 9,
+                        "skop_tugas" => $request->skop_tugas,
+                        "lesen" => $request->lesen,
+                        "notelori" => $request->notelori,
+                        "emelori" => $request->emelori,
+                        "alamat1ori" => $request->alamat1ori,
+                        "alamat2ori" => $request->alamat2ori,
+                        "poskodori" => $request->poskodori,
+                        "negeriori" => $request->negeriori,
+                        "pk_sek" => $request->pek_sek,
+                        "tahap_pen" => $request->tahap_pen,
+                        "fail_lesen" => $path,
+                        "surat_skg" => $path2,
+                        "sp_eps" => $request->sp_eps,
+                        "dari_tahun" => isset($request->dari_tahun) ? $request->dari_tahun : NULL,
+                        "p_sampingan" => isset($request->p_sampingan) ? $request->p_sampingan : NULL,
+                        "tahun_h" => $request->tahun_h
+                    ]);
+    
+            }
+        }else{
+           
+            if (isset($request->panel_bank)){
+                $id = DB::table('Info Ekstra')->insertGetId([
+                    "panel_bank" => $request->panel_bank,
+                    "notel" => $request->notel,
+                    "nama_panel" => $request->nama_panel,
+                    "no_kp" => $request->no_kp,
+                    "no_permit" => $request->no_permit,
+                    "notel2" => $request->notel2,
+                    "lesen" => $request->lesen,
+                    "notelori" => $request->notelori,
+                    "emelori" => $request->emelori,
+                    "alamat1ori" => $request->alamat1ori,
+                    "alamat2ori" => $request->alamat2ori,
+                    "poskodori" => $request->poskodori,
+                    "negeriori" => $request->negeriori,
+                    "tahap_pen" => $request->tahap_pen,
+                    "fail_lesen" => $path,
+                    "surat_skg" => $path2,
+                    "sp_eps" => $request->sp_eps,
+                    "dari_tahun" => isset($request->dari_tahun) ? $request->dari_tahun : NULL,
+                    "p_sampingan" => isset($request->p_sampingan) ? $request->p_sampingan : NULL,
+                    "tahun_h" => $request->tahun_h
+
+                ]);
+    
+            }else{
+                
+                //insert file first
+                    //return response()->json(["status"=>$request->pp_eps],200);
+                    $id = DB::table('Info Ekstra')->insertGetId([
+                   
+                        "pp_eps" => $request->pp_eps == 0 || $request->pp_eps == 1 ? $request->pp_eps : 9,
+                        "skop_tugas" => $request->skop_tugas,
+                        "lesen" => $request->lesen,
+                        "notelori" => $request->notelori,
+                        "emelori" => $request->emelori,
+                        "alamat1ori" => $request->alamat1ori,
+                        "alamat2ori" => $request->alamat2ori,
+                        "poskodori" => $request->poskodori,
+                        "negeriori" => $request->negeriori,
+                        "pk_sek" => $request->pek_sek,
+                        "tahap_pen" => $request->tahap_pen,
+                        "fail_lesen" => $path,
+                        "surat_skg" => $path2,
+                        "sp_eps" => $request->sp_eps,
+                        "dari_tahun" => isset($request->dari_tahun) ? $request->dari_tahun : NULL,
+                        "p_sampingan" => isset($request->p_sampingan) ? $request->p_sampingan : NULL,
+                        "tahun_h" => $request->tahun_h
+                    ]);
+    
+            }
+            $newp = new Permohonan();
+            if ($request->mode == "hantar"){
+                $newp->status_aktif = 1;
+            }else{
+                $newp->status_aktif = 0;
+            }
+           
+            $user = auth('api')->user();
+            $newp->id_pengguna = $user['id'];
+            $newp->jenis_permohonan = "p2";
+            $newp->id_ekstra = $id;
+            $newp->save();   
+        }      
+        
+        return response()->json(["status"=>"success"],200);
     }
 
     public function checkGotAppliedBefore(Request $request){
