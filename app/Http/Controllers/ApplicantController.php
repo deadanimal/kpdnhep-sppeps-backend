@@ -272,7 +272,12 @@ class ApplicantController extends Controller
             if ($request->file('fail_lesen')){
                 $path = Storage::putFile('lesen', $request->file('fail_lesen'));
             }else{
-                $path = $old->fail_lesen;
+                if(!is_null($old)){         
+                    $ei = DB::table('Info Ekstra')->where('id', $old->id_ekstra)->first();
+                    $path = $ei->fail_lesen;
+                }else{
+                    $path = "";
+                }
             }   
     
             if (isset($request->panel_bank)){
