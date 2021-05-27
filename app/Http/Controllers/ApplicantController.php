@@ -415,7 +415,9 @@ class ApplicantController extends Controller
                     "sp_eps" => $request->sp_eps,
                     "dari_tahun" => isset($request->dari_tahun) ? $request->dari_tahun : NULL,
                     "p_sampingan" => isset($request->p_sampingan) ? $request->p_sampingan : NULL,
-                    "tahun_h" => $request->tahun_h
+                    "tahun_h" => $request->tahun_h,
+                    "nama_faillesen" => $request->nama_faillesen,
+                    "nama_failsokong" => $request->nama_failsokong,
 
                 ]);
     
@@ -441,7 +443,9 @@ class ApplicantController extends Controller
                         "sp_eps" => $request->sp_eps,
                         "dari_tahun" => isset($request->dari_tahun) ? $request->dari_tahun : NULL,
                         "p_sampingan" => isset($request->p_sampingan) ? $request->p_sampingan : NULL,
-                        "tahun_h" => $request->tahun_h
+                        "tahun_h" => $request->tahun_h,
+                        "nama_faillesen" => $request->nama_faillesen,
+                        "nama_failsokong" => $request->nama_failsokong,
                     ]);
     
             }
@@ -468,7 +472,9 @@ class ApplicantController extends Controller
                     "sp_eps" => $request->sp_eps,
                     "dari_tahun" => isset($request->dari_tahun) ? $request->dari_tahun : NULL,
                     "p_sampingan" => isset($request->p_sampingan) ? $request->p_sampingan : NULL,
-                    "tahun_h" => $request->tahun_h
+                    "tahun_h" => $request->tahun_h,
+                    "nama_faillesen" => $request->nama_faillesen,
+                    "nama_failsokong" => $request->nama_failsokong,
 
                 ]);
     
@@ -494,7 +500,9 @@ class ApplicantController extends Controller
                         "sp_eps" => $request->sp_eps,
                         "dari_tahun" => isset($request->dari_tahun) ? $request->dari_tahun : NULL,
                         "p_sampingan" => isset($request->p_sampingan) ? $request->p_sampingan : NULL,
-                        "tahun_h" => $request->tahun_h
+                        "tahun_h" => $request->tahun_h,
+                        "nama_faillesen" => $request->nama_faillesen,
+                        "nama_failsokong" => $request->nama_failsokong,
                     ]);
     
             }
