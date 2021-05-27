@@ -177,7 +177,18 @@ class ApplicantController extends Controller
         $user = auth('api')->user();
         $data = DB::table('Permohonan')->where('id_pengguna',$user['id'])->get();
         foreach($data as $key => $value){
-            $value->type = $value->jenis_permohonan == "p1" ? "Permohonan Baharu" : "";
+
+            switch($value->jenis_permohonan){
+                case "p1":
+                    $value->type = "Permohonan Baharu";
+                case "p2":
+                    $value->type = "Permohonan Pembaharuan";
+                case "p3":
+                    $value->type = "Permohonan Pendua";
+                case "p4":
+                    $value->type = "Permohonan Rayuan";
+            } 
+
             $value->date = $value->tarikh_cipta;
             $nric = DB::table('users')->where('id',$value->id_pengguna)->first();
             $value->nric = $nric->no_kp;
@@ -236,7 +247,8 @@ class ApplicantController extends Controller
                 "negeriori" => $request->negeriori,
                 "pk_sek" => $request->pek_sek,
                 "tahap_pen" => $request->tahap_pen,
-                "fail_lesen" => $path
+                "fail_lesen" => $path,
+                "nama_faillesen" => $request->nama_faillesen
             ]);
 
         }else{
@@ -255,7 +267,7 @@ class ApplicantController extends Controller
                     "pk_sek" => $request->pek_sek,
                     "tahap_pen" => $request->tahap_pen,
                     "fail_lesen" => $path,
-
+                    "nama_faillesen" => $request->nama_faillesen
                 ]);
 
         }
@@ -300,7 +312,8 @@ class ApplicantController extends Controller
                     "negeriori" => $request->negeriori,
                     "pk_sek" => $request->pek_sek,
                     "tahap_pen" => $request->tahap_pen,
-                    "fail_lesen" => $path
+                    "fail_lesen" => $path,
+                    "nama_faillesen" => $request->nama_faillesen
                 ]);
     
             }else{
@@ -320,7 +333,8 @@ class ApplicantController extends Controller
                         "negeriori" => $request->negeriori,
                         "pk_sek" => $request->pek_sek,
                         "tahap_pen" => $request->tahap_pen,
-                        "fail_lesen" => $path
+                        "fail_lesen" => $path,
+                        "nama_faillesen" => $request->nama_faillesen
                     ]);
     
             }
