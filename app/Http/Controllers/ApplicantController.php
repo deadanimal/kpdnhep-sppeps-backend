@@ -181,12 +181,16 @@ class ApplicantController extends Controller
             switch($value->jenis_permohonan){
                 case "p1":
                     $value->type = "Permohonan Baharu";
+                    break;
                 case "p2":
                     $value->type = "Permohonan Pembaharuan";
+                    break;
                 case "p3":
                     $value->type = "Permohonan Pendua";
+                    break;
                 case "p4":
                     $value->type = "Permohonan Rayuan";
+                    break;
             } 
 
             $value->date = $value->tarikh_cipta;
