@@ -617,6 +617,100 @@ class ApplicantController extends Controller
         return response()->json(["status"=>"success"],200);
     }
 
+    public function saveApplicationA(Request $request){
+        $user = auth('api')->user();
+
+             //check if exists
+            $old = DB::table('Permohonan')->where('status_aktif',0)->where('id_pengguna',$user['id'])->where('jenis_permohonan','p4')->first(); 
+            
+            if ($request->file('fail_lpr_polis')){
+                $path = Storage::putFile('fail_lpr_polis', $request->file('fail_lpr_polis'));
+            }else{  
+                if(!is_null($old)){         
+                    $ei = DB::table('Info Ekstra')->where('id', $old->id_ekstra)->first();
+                    $path = $ei->fail_lpr_polis;
+                }else{
+                    $path = "";
+                }
+            }   
+
+        if(!is_null($old)){
+
+            if ($request->mode == "hantar"){
+                DB::table('Permohonan')->where('id', $old->id)
+                ->update([
+                    "status_aktif" => 1
+                ]);
+            }
+
+                    $id = DB::table('Info Ekstra')->where('id', $old->id_ekstra)
+                    ->update([
+                        "pp_eps" => $request->pp_eps == 0 || $request->pp_eps == 1 ? $request->pp_eps : 9,
+                        "skop_tugas" => $request->skop_tugas,
+                        "lesen" => $request->lesen,
+                        "notelori" => $request->notelori,
+                        "emelori" => $request->emelori,
+                        "alamat1ori" => $request->alamat1ori,
+                        "alamat2ori" => $request->alamat2ori,
+                        "poskodori" => $request->poskodori,
+                        "negeriori" => $request->negeriori,
+                        "pk_sek" => $request->pek_sek,
+                        "fail_lpr_polis" => $path,
+                        "sp_eps" => $request->sp_eps,
+                        "dari_tahun" => isset($request->dari_tahun) ? $request->dari_tahun : NULL,
+                        "p_sampingan" => isset($request->p_sampingan) ? $request->p_sampingan : NULL,
+                        "tahun_h" => $request->tahun_h,
+                        "nama_faillprpolis" => $request->nama_faillprpolis,
+                        "alasan_k" => $request->alasan_k,
+                        "alasan_l" => isset($request->alasan_l) ? $request->alasan_l : '',
+                        "no_gantian" => $request->no_gantian,
+                         "negeri_laporan" => $request->negeri_laporan,
+                         "no_lpr_polis" => $request->no_lpr_polis
+                    ]);
+    
+        }else{
+           
+                    $id = DB::table('Info Ekstra')->insertGetId([
+                        "alasan_k" => $request->alasan_k,
+                        "alasan_l" => isset($request->alasan_l) ? $request->alasan_l : '',
+                        "no_gantian" => $request->no_gantian,
+                        "negeri_laporan" => $request->negeri_laporan,
+                        "no_lpr_polis" => $request->no_lpr_polis,
+                        "pp_eps" => $request->pp_eps == 0 || $request->pp_eps == 1 ? $request->pp_eps : 9,
+                        "skop_tugas" => $request->skop_tugas,
+                        "lesen" => $request->lesen,
+                        "notelori" => $request->notelori,
+                        "emelori" => $request->emelori,
+                        "alamat1ori" => $request->alamat1ori,
+                        "alamat2ori" => $request->alamat2ori,
+                        "poskodori" => $request->poskodori,
+                        "negeriori" => $request->negeriori,
+                        "pk_sek" => $request->pek_sek,
+                        "fail_lpr_polis" => $path,
+                        "sp_eps" => $request->sp_eps,
+                        "dari_tahun" => isset($request->dari_tahun) ? $request->dari_tahun : NULL,
+                        "p_sampingan" => isset($request->p_sampingan) ? $request->p_sampingan : NULL,
+                        "tahun_h" => $request->tahun_h,
+                        "nama_faillprpolis" => $request->nama_faillprpolis,
+                    ]);
+            
+            $newp = new Permohonan();
+            if ($request->mode == "hantar"){
+                $newp->status_aktif = 1;
+            }else{
+                $newp->status_aktif = 0;
+            }
+           
+            $user = auth('api')->user();
+            $newp->id_pengguna = $user['id'];
+            $newp->jenis_permohonan = "p4";
+            $newp->id_ekstra = $id;
+            $newp->save();   
+        }      
+        
+        return response()->json(["status"=>"success"],200);
+    }
+
     public function checkGotAppliedBefore(Request $request){
         $user = auth('api')->user();
         $userid = $user['id'];
