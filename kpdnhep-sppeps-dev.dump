@@ -1,0 +1,491 @@
+-- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
+--
+-- Host: project-mysql-do-user-812878-0.b.db.ondigitalocean.com    Database: kpdnhep-sppeps-dev
+-- ------------------------------------------------------
+-- Server version	8.0.20
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
+SET @@SESSION.SQL_LOG_BIN= 0;
+
+--
+-- GTID state at the beginning of the backup 
+--
+
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '83dd1706-1c10-11eb-a14e-46fec98c8ac1:1-16698';
+
+--
+-- Table structure for table `Arkib`
+--
+
+DROP TABLE IF EXISTS `Arkib`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Arkib` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `kod_kategori_arkib` varchar(255) NOT NULL,
+  `tajuk` longtext NOT NULL,
+  `nama_fail_manual` longtext NOT NULL,
+  `tarikh_aktif` date NOT NULL,
+  `tarikh_akhir` bit(1) NOT NULL,
+  `tarikh_cipta` timestamp NOT NULL,
+  `cipta_oleh` int NOT NULL,
+  `tarikh_kemaskini` date NOT NULL,
+  `kemaskini_oleh` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Arkib`
+--
+
+LOCK TABLES `Arkib` WRITE;
+/*!40000 ALTER TABLE `Arkib` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Arkib` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Bidang`
+--
+
+DROP TABLE IF EXISTS `Bidang`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Bidang` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `kod_bidang` int NOT NULL,
+  `tarikh_cipta` timestamp NOT NULL,
+  `cipta_oleh` int NOT NULL,
+  `kemaskini_oleh` int NOT NULL,
+  `jenis_bidang` varchar(255) NOT NULL,
+  `tarikh_kemaskini` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Bidang`
+--
+
+LOCK TABLES `Bidang` WRITE;
+/*!40000 ALTER TABLE `Bidang` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Bidang` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Dokumen Sokongan`
+--
+
+DROP TABLE IF EXISTS `Dokumen Sokongan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Dokumen Sokongan` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_permohonan` int NOT NULL,
+  `id_pembayaran` int NOT NULL,
+  `nama_dokumen` text NOT NULL,
+  `keterangan` text NOT NULL,
+  `lokasi` text NOT NULL,
+  `nama_fizikal` text NOT NULL,
+  `tarikh_cipta` timestamp NOT NULL,
+  `cipta_oleh` int NOT NULL,
+  `tarikh_kemaskini` datetime NOT NULL,
+  `kemaskini_oleh` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Dokumen Sokongan`
+--
+
+LOCK TABLES `Dokumen Sokongan` WRITE;
+/*!40000 ALTER TABLE `Dokumen Sokongan` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Dokumen Sokongan` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Info Ekstra`
+--
+
+DROP TABLE IF EXISTS `Info Ekstra`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Info Ekstra` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `fail_lesen` text,
+  `pp_eps` int DEFAULT NULL,
+  `skop_tugas` int DEFAULT NULL,
+  `panel_bank` int DEFAULT NULL,
+  `lesen` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `tahap_pen` int DEFAULT NULL,
+  `pk_sek` text,
+  `alasan_k` int DEFAULT NULL,
+  `fail_lpr_polis` text,
+  `no_lpr_polis` int DEFAULT NULL,
+  `negeri_laporan` text,
+  `no_gantian` int DEFAULT NULL,
+  `alasan_l` text,
+  `dari_tahun` date DEFAULT NULL,
+  `sp_eps` int DEFAULT NULL,
+  `surat_skg` text,
+  `tahun_h` int DEFAULT NULL,
+  `ph_eps` int DEFAULT NULL,
+  `p_sampingan` text,
+  `nama_panel` varchar(255) DEFAULT NULL,
+  `notel` varchar(255) DEFAULT NULL,
+  `no_permit` varchar(255) DEFAULT NULL,
+  `no_kp` varchar(255) DEFAULT NULL,
+  `notel2` varchar(255) DEFAULT NULL,
+  `notelori` varchar(255) DEFAULT NULL,
+  `emelori` varchar(255) DEFAULT NULL,
+  `alamat1ori` text,
+  `negeriori` varchar(255) DEFAULT NULL,
+  `poskodori` int DEFAULT NULL,
+  `alamat2ori` text,
+  `nama_failsokong` text,
+  `nama_faillesen` text,
+  `nama_faillprpolis` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Info Ekstra`
+--
+
+LOCK TABLES `Info Ekstra` WRITE;
+/*!40000 ALTER TABLE `Info Ekstra` DISABLE KEYS */;
+INSERT INTO `Info Ekstra` VALUES (11,'',9,1,NULL,',E',0,'Pembina bangunan',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0129910369','takeitserious11@gmail.com','444 Block D','Perlis',46150,'Jln PJS 7/15, Bandar Sunway',NULL,NULL,NULL),(12,'',9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0129910369','takeitserious11@gmail.com','444 Block D','Perlis',46150,'Jln PJS 7/15, Bandar Sunway',NULL,NULL,NULL),(13,'',9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0129910369','takeitserious11@gmail.com','444 Block D','Perlis',46150,'Jln PJS 7/15, Bandar Sunway',NULL,NULL,NULL),(14,'',9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0129910369','takeitserious11@gmail.com','444 Block D','Perlis',46150,'Jln PJS 7/15, Bandar Sunway',NULL,NULL,NULL),(15,'',9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0129910369','takeitserious11@gmail.com','444 Block D','Perlis',46150,'Jln PJS 7/15, Bandar Sunway',NULL,NULL,NULL),(16,'',9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0129910369','takeitserious11@gmail.com','444 Block D','Perlis',46150,'Jln PJS 7/15, Bandar Sunway',NULL,NULL,NULL),(17,'',9,1,NULL,',B1,B2,',0,'Pembina bangunan',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0129910369','takeitserious11@gmail.com','444 Block D','Perlis',46150,'Jln PJS 7/15, Bandar Sunway',NULL,NULL,NULL),(18,'lesen/EbLxuNa1DnhnVjhKukmddL8T2JW3DkA1Xt5CWz9m.jpg',0,1,NULL,',B1,B2,,D,F',2,'Pembina bangunan',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0129910369','takeitserious11@gmail.com','444 Block D','Perlis',46150,'Jln PJS 7/15, Bandar Sunway',NULL,NULL,NULL),(19,'',9,1,NULL,',B1,B2,,D,F',2,'Pembina bangunan',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0129910369','takeitserious11@gmail.com','444 Block D','Perlis',46150,'Jln PJS 7/15, Bandar Sunway',NULL,NULL,NULL),(21,'lesen/sbBEYjK0zQxeyzGYe0inWpys8BLxJPvoliuFI9Un.jpg',0,0,NULL,'null,E',1,'Pencuci Kereta',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0129910369','gg@gmail.com','3ss','Kedah',46150,'Jln PJS 7/15, Bandar Sunway',NULL,NULL,NULL),(22,'lesen/YqGWGjjnfB6jBLqko4e0nP3KGzK0J6AyG3GzVbya.jpg',NULL,NULL,3,',D,E',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-05-24',1,'',NULL,NULL,NULL,'Banking','01288888888888','71537615371','951226666','0129910355','0129910369','gg@gmail.com','3ss','Kedah',46150,'Jln PJS 7/15, Bandar Sunway',NULL,NULL,NULL),(23,'',NULL,NULL,3,',D,E',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-05-24',1,'surat_sokong/ilFtUL6QjntGePLOhbUhYM8y3RLWJIc2gTJSPDnQ.pdf',2005,NULL,NULL,'Banking','01288888888888','71537615371','951222146666','0129910355','0129910369','gg@gmail.com','3ss','Kedah',46150,'Jln PJS 7/15, Bandar Sunway',NULL,NULL,NULL),(24,'lesen/Hk2hqgK4ybGvyJzSn9kJK5XVmomuFp2WULHEjWz7.jpg',1,0,NULL,'null,E',1,'Pencuci Kereta',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0129910369','gg@gmail.com','3ss','Kedah',46150,'Jln PJS 7/15, Bandar Sunway',NULL,'lesensampel.jpeg',NULL),(25,'lesen/SQaPY4MhJXyWIJqmBxIwM4zRaTaE0lszXjnndc2h.pdf',NULL,NULL,3,',D,E',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-05-24',1,'surat_sokong/s8K19P7cIzhw38TThZJ3BpRO3aTTCA9jGpal9Igk.jpg',2005,NULL,NULL,'Banking','01288888888888','71537615371','951222146666','0129910355','0129910369','gg@gmail.com','3ss','Kedah',46150,'Jln PJS 7/15, Bandar Sunway',NULL,NULL,NULL),(26,'lesen/bLqbXqaYz4WImNK5405UBSU2GhpOqV6rKy6j8V98.jpg',NULL,NULL,3,',D,E',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-05-24',1,'surat_sokong/yIlOmYFN2iJftV1hg0M1UU2s4pfaZJPACrWlt3Ny.pdf',2005,NULL,NULL,'Banking','01288888888888','71537615371','951222146666','0129910355','0129910369','gg@gmail.com','3ss','Kedah',46150,'Jln PJS 7/15, Bandar Sunway','chart.pdf','lesensampel.jpeg',NULL),(27,'',0,1,NULL,'z',2,'null',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0129910369','gg@gmail.com','3ss','Kedah',46150,'Jln PJS 7/15, Bandar Sunway',NULL,NULL,NULL),(28,NULL,NULL,NULL,NULL,'null',NULL,'null',2,'fail_lpr_polis/XhY6WgfHCsXSBbFfrEhv6Q83XkUBu0Y29ebHrgtL.pdf',412321,'WPPutrajaya',4,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0129910369','gg@gmail.com','3ss','Kedah',46150,'Jln PJS 7/15, Bandar Sunway',NULL,NULL,NULL);
+/*!40000 ALTER TABLE `Info Ekstra` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Kronologi`
+--
+
+DROP TABLE IF EXISTS `Kronologi`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Kronologi` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `no_kp` varchar(100) NOT NULL,
+  `id_pemohon` int NOT NULL,
+  `catatan` varchar(100) NOT NULL,
+  `cipta_oleh` int NOT NULL,
+  `tarikh_cipta` timestamp NOT NULL,
+  `tarikh_kemaskini` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Kronologi`
+--
+
+LOCK TABLES `Kronologi` WRITE;
+/*!40000 ALTER TABLE `Kronologi` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Kronologi` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Log Pengguna`
+--
+
+DROP TABLE IF EXISTS `Log Pengguna`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Log Pengguna` (
+  `id` int NOT NULL,
+  `username` varchar(100) NOT NULL DEFAULT '',
+  `kod_status_log` char(2) NOT NULL DEFAULT '',
+  `id_pengguna` varchar(100) NOT NULL DEFAULT '',
+  `cipta_oleh` int NOT NULL,
+  `tarikh_cipta` timestamp NOT NULL,
+  `tarikh_kemaskini` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Log Pengguna`
+--
+
+LOCK TABLES `Log Pengguna` WRITE;
+/*!40000 ALTER TABLE `Log Pengguna` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Log Pengguna` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Pembayaran`
+--
+
+DROP TABLE IF EXISTS `Pembayaran`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Pembayaran` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_permohonan` int NOT NULL,
+  `jenis_bank` varchar(50) NOT NULL,
+  `kod_status_pembayaran` char(2) NOT NULL,
+  `kadar_bayaran` decimal(19,4) NOT NULL,
+  `no_rujukan` varchar(50) NOT NULL DEFAULT '',
+  `no_resit` varchar(50) NOT NULL DEFAULT '',
+  `bank_kod` varchar(100) NOT NULL DEFAULT '',
+  `status_berjaya` int NOT NULL,
+  `cipta_oleh` int NOT NULL,
+  `tarikh_cipta` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Pembayaran`
+--
+
+LOCK TABLES `Pembayaran` WRITE;
+/*!40000 ALTER TABLE `Pembayaran` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Pembayaran` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Pengumuman`
+--
+
+DROP TABLE IF EXISTS `Pengumuman`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Pengumuman` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `kandungan` longtext NOT NULL,
+  `bi_desc` longtext NOT NULL,
+  `tarikh_mula_papar` date NOT NULL,
+  `tarikh_akhir_papar` date NOT NULL,
+  `ind_hantar` bit(1) NOT NULL,
+  `tarikh_cipta` timestamp NOT NULL,
+  `tajuk` varchar(255) NOT NULL,
+  `cipta_oleh` int NOT NULL,
+  `tarikh_kemaskini` timestamp NOT NULL,
+  `kemaskini_oleh` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Pengumuman`
+--
+
+LOCK TABLES `Pengumuman` WRITE;
+/*!40000 ALTER TABLE `Pengumuman` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Pengumuman` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Permit`
+--
+
+DROP TABLE IF EXISTS `Permit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Permit` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_pembayaran` int NOT NULL,
+  `kod_cawangan` char(50) NOT NULL,
+  `no_permit` varchar(50) NOT NULL,
+  `no_siri_kad` varchar(50) NOT NULL,
+  `tarikh_lulus` date NOT NULL,
+  `tarikh_tamat` date NOT NULL,
+  `tempoh_permit` int NOT NULL,
+  `tarikh_pembaharuan` date NOT NULL,
+  `status_aktif` bit(1) NOT NULL,
+  `cetak` int NOT NULL,
+  `tarikh_cipta` timestamp NOT NULL,
+  `cipta_oleh` int NOT NULL,
+  `tarikh_kemaskini` timestamp NOT NULL,
+  `kemaskini_oleh` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Permit`
+--
+
+LOCK TABLES `Permit` WRITE;
+/*!40000 ALTER TABLE `Permit` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Permit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Permohonan`
+--
+
+DROP TABLE IF EXISTS `Permohonan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Permohonan` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `status_aktif` int DEFAULT NULL,
+  `id_pengguna` int DEFAULT NULL,
+  `jenis_permohonan` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'p1 = p baru',
+  `kod_cawangan` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `tarikh_penghantaran` datetime DEFAULT NULL,
+  `status_terkini` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `id_pegawai_agensi` int DEFAULT NULL,
+  `tarikh_tapisan_polis` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `status_tapisan_polis` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `no_rujukan_polis` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `catatan_polis` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `id_penyemak_negeri` int DEFAULT NULL,
+  `tarikh_semakan_negeri` datetime DEFAULT NULL,
+  `status_semakan_negeri` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `catatan_semakan_negeri` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `id_penyemak_hq` int DEFAULT NULL,
+  `tarikh_semakan_hq` datetime DEFAULT NULL,
+  `status_semakan_hq` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '',
+  `catatan_semakan_hq` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `id_penyokong` int DEFAULT NULL,
+  `tarikh_sokongan` datetime DEFAULT NULL,
+  `status_sokongan` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `catatan_penyokong` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `id_pelulus` int DEFAULT NULL,
+  `tarikh_kelulusan` datetime DEFAULT NULL,
+  `status_kelulusan` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `catatan_pelulus` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `tarikh_rayuan` datetime DEFAULT NULL,
+  `alasan_rayuan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `id_penyemak_rayuan` int DEFAULT NULL,
+  `tarikh_semak_rayuan` datetime DEFAULT NULL,
+  `status_rayuan` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `catatan_penyemak_rayuan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `tarikh_cipta` timestamp NULL DEFAULT NULL,
+  `cipta_oleh` int DEFAULT NULL,
+  `tarikh_kemaskini` timestamp NULL DEFAULT NULL,
+  `kemaskini_oleh` int DEFAULT NULL,
+  `id_ekstra` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Permohonan`
+--
+
+LOCK TABLES `Permohonan` WRITE;
+/*!40000 ALTER TABLE `Permohonan` DISABLE KEYS */;
+INSERT INTO `Permohonan` VALUES (7,1,14,'p1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-05-11 09:53:12',NULL,'2021-05-11 09:53:12',NULL,9),(8,1,14,'p1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-05-18 10:54:58',NULL,'2021-05-18 10:54:58',NULL,10),(16,0,12,'p1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-05-21 09:41:47',NULL,'2021-05-21 16:07:23',NULL,18);
+/*!40000 ALTER TABLE `Permohonan` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Rujukan`
+--
+
+DROP TABLE IF EXISTS `Rujukan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Rujukan` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `kod_kategori_rujukan` char(50) NOT NULL,
+  `keterangan_bm` text NOT NULL,
+  `keterangan_bi` text NOT NULL,
+  `status_aktif` bit(1) NOT NULL,
+  `tarikh_cipta` timestamp NOT NULL,
+  `cipta_oleh` int NOT NULL,
+  `tarikh_kemaskini` date NOT NULL,
+  `kemaskini_oleh` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Rujukan`
+--
+
+LOCK TABLES `Rujukan` WRITE;
+/*!40000 ALTER TABLE `Rujukan` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Rujukan` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'id pengguna autogenerated',
+  `status_aktif` int NOT NULL COMMENT 'status aktif pengguna (1=aktif,0=takaktif)',
+  `kod_peranan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT 'kod peranan utk pegawai KPDNHEP',
+  `username` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '' COMMENT 'id utk log masuk',
+  `password` varchar(255) NOT NULL DEFAULT '' COMMENT 'kata laluan tuk pengguna',
+  `remember_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '',
+  `no_kp` varchar(12) NOT NULL DEFAULT '' COMMENT 'no kad pengenalan pengguna',
+  `emel` varchar(50) NOT NULL DEFAULT '' COMMENT 'emel pengguna sistem',
+  `nama` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '' COMMENT 'nama pengguna sistem',
+  `tarikh_lahir` date DEFAULT NULL COMMENT 'tarikh_lahir pemohon',
+  `jantina` int DEFAULT NULL COMMENT '0-lelaki 1-perempuan',
+  `gred` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '' COMMENT 'gred pegawai',
+  `kod_bahagian` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '' COMMENT 'kod bahagian pegawai',
+  `kod_jawatan` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '' COMMENT 'kod jawatan pegawai',
+  `alamat1` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '',
+  `alamat2` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '',
+  `alamat3` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '',
+  `poskod` int DEFAULT NULL,
+  `negeri` varchar(30) DEFAULT NULL,
+  `notel` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'no telefon',
+  `notelpej` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'no telefon pejabat',
+  `notelbimbit` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'no telefon bimbit',
+  `gambar_kp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `gambar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `kod_status_pengguna` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'status tolak/diterima',
+  `login_terakhir` datetime DEFAULT NULL,
+  `capaian_id` int DEFAULT NULL COMMENT 'capaian pengguna autorisasi log masuk',
+  `level_akses` int NOT NULL COMMENT 'level utk melihat paparan fungsi',
+  `tarikh_cipta` timestamp NOT NULL,
+  `cipta_oleh` int DEFAULT NULL,
+  `tarikh_kemaskini` timestamp NOT NULL,
+  `kemaskini_oleh` int DEFAULT NULL,
+  `code_daftar` int DEFAULT NULL,
+  `cawangan_kp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `umur` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (6,1,'PYK,PEL','','$2y$10$wUGTJVyU1DXIGevPtUdwVuZgYnuRZ1FVhFffP21iHYbyZyWVYd4..','','666666666666','takeitserious11@gmail.com','Mat Rentap',NULL,0,'','','','s','selangor','',1,'Perak',NULL,NULL,'0129910369','mykad/wf1RCWwBzQ04TJ6sbQNaIw0PzHEhCzoaqgP0fuJM.png','profilePicture/x7VRWXI527SaA450wquYW4GZI96iuxKuVX7LprNJ.png',NULL,NULL,NULL,1,'2021-04-08 10:15:24',NULL,'2021-04-08 10:15:53',NULL,-1,NULL,NULL),(12,1,NULL,'','$2y$10$wUGTJVyU1DXIGevPtUdwVuZgYnuRZ1FVhFffP21iHYbyZyWVYd4..','','999999999999','takeitserious11@gmail.com','Rowan',NULL,1,'','','','444 Block D','Jln PJS 7/15, Bandar Sunway','',46150,'Perlis',NULL,NULL,'0129910369','mykad/3L3hpUeJFnk2J4po5buCmVzfODwq9WR1i8ZbmSiJ.jpg','profilePicture/wDo9Mv4sWyGc2K5fvmOCiGhMoZJErWw1Bu8HxuZa.png',NULL,NULL,NULL,0,'2021-04-21 14:34:17',NULL,'2021-04-21 14:35:10',NULL,-1,NULL,NULL),(13,0,NULL,'','$2y$10$gs2jpQBVkdx6G/6RFEaUu.xmAeB4QLrTdTQxeCpCsxJ1AaPWb1g5K','','0','ygg@gg.com','',NULL,NULL,'','','','','','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2021-04-21 15:31:37',NULL,'2021-04-21 15:31:37',NULL,32483620,NULL,NULL),(14,1,'PDRM,PN,PHQ,MAKL,KPD','','$2y$10$IqEdWys6TIWDaj29ghHLqe6QYKOfnoVwwgGJWgK1Qlq/6L4BIVBuO','','777777777777','takeitserious12@gmail.com','Mat Tepeng',NULL,0,'','','','s','selangor','',1,'Perak',NULL,NULL,'0129910369','mykad/wf1RCWwBzQ04TJ6sbQNaIw0PzHEhCzoaqgP0fuJM.png','profilePicture/x7VRWXI527SaA450wquYW4GZI96iuxKuVX7LprNJ.png',NULL,NULL,NULL,2,'2021-04-08 10:15:24',NULL,'2021-04-08 10:15:53',NULL,-1,NULL,NULL),(15,1,NULL,'','$2y$10$wUGTJVyU1DXIGevPtUdwVuZgYnuRZ1FVhFffP21iHYbyZyWVYd4..','','888888888888','takeitserious10@gmail.com','Mat Tepeng 2',NULL,0,'','','','444 Block D','Jln PJS 7/15, Bandar Sunway','',46150,'Perlis',NULL,NULL,'0129910369','mykad/3L3hpUeJFnk2J4po5buCmVzfODwq9WR1i8ZbmSiJ.jpg','profilePicture/wDo9Mv4sWyGc2K5fvmOCiGhMoZJErWw1Bu8HxuZa.png',NULL,NULL,NULL,0,'2021-04-21 14:34:17',NULL,'2021-04-21 14:35:10',NULL,-1,NULL,NULL),(16,1,NULL,'','$2y$10$.Dyf5frCCAsK6ECesylIROErO6hEUkuo2dUiEEcg7q2rQc.ZcC69e','','555555555555','5@gmail.com','',NULL,0,'','','','33','Jln PJS 7/15, Bandar Sunway','',46150,'Kedah',NULL,NULL,'0129444444','mykad/ja1W85qJwDLP61CrExDzv9hl5WjI5IAlG0f91p9I.jpg','profilePicture/dYXviU4AqxN2EM625pkONwNqcCrbsdSMu1paGPS6.jpg',NULL,NULL,NULL,0,'2021-05-03 09:17:29',NULL,'2021-05-03 09:31:19',NULL,-1,NULL,NULL),(17,1,NULL,'','$2y$10$SHtUJQlBKMNC921ajxL4huWf.IlJZDMhwVHX1qjFQcSNiUlv8bZ9O','','444444444444','gg@gmail.com','',NULL,0,'','','','3ss','Jln PJS 7/15, Bandar Sunway','',46150,'Kedah',NULL,NULL,'0129910369','mykad/1YWi8RLeofK8SRvcswaBbKoAhAYwvoWnS0aRYtBP.jpg','profilePicture/zChTuNJxk7BNB6TH2F03HJil12D6vUmH2qnLJOuo.png',NULL,NULL,NULL,0,'2021-05-21 17:08:38',NULL,'2021-05-21 17:09:42',NULL,-1,NULL,NULL);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'kpdnhep-sppeps-dev'
+--
+SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-06-03 10:17:56
